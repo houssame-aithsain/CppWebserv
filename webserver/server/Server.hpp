@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 #include "../../parsing/parser.hpp"
+#include "../../request_response/Response.hpp"
 #include <csignal>
 #include <sys/event.h>
 #include <limits.h>
@@ -27,9 +28,10 @@
 
 #define SOCKETFAILED "Error binding socket!"
 
-class Server : virtual public Parser{
+class Server : virtual public Parser , public Response, public ServerSocket, public Client {
     private:
         pollfd events;
+        std::map<int, Client> clientSocket;
         std::vector<ServerSocket> virtualServer;
         std::vector<int> serverPort;
         std::vector<pollfd> tmpEvents;

@@ -23,6 +23,20 @@ Server & Server::operator=(const Server & other) {
     return (*this);
 }
 
+void Server::handleHttpRequest(int cSock, Parser &p, int flag, int type)
+{
+    if (flag == 1 && this->_errorCode == 0) {
+        createResponse(p, type, clientSocket[cSock]);
+    }
+    clientSocket[cSock].resetRemainingBytes();
+    clientSocket[cSock].resetTotalBytesSent();
+    clientSocket[cSock].clearBuffer();
+    clientSocket[cSock].clearResponseBuffer();
+    clientSocket[cSock].fillResponseBuffer(this->response);
+    clientSocket[cSock].setRemainingBytes(this->response.length());
+    clientSocket[cSock].clearBuffer();
+}
+
 int Server::getClientPort(int index) {
     
     int cS = tmpEvents[index].fd;
@@ -109,6 +123,52 @@ bool Server::Sent(int cSock, int index) {
     return true;
 }
 
+void Server::GET(int index,  Parser &p, int type) {
+
+    std::cout << blueColor << "GET" << resetColor << std::endl;
+    this->_errorCode = 0;
+    std::string pr = this->getPort();
+    int check_error = requestErrorsHandling(p, pr);
+    if (this->_errorCode || check_error == 1) {
+        handleHttpRequest(tmpEvents[index].fd, p, 0, 0);
+    }
+    else if (this->request_data["Method"] == "GET" && check_error == 0) {
+        handleHttpRequest(tmpEvents[index].fd, p, 1, type);
+    }
+}
+
+void Server::POST(int index, Parser &p, int type) {
+
+    std::cout << blueColor << "POST" << resetColor << std::endl;
+    clientSocket[tmpEvents[index].fd].appendPostBuffer(clientSocket[tmpEvents[index].fd].getBuffer());
+    if (clientSocket[tmpEvents[index].fd].getResponseBodyCounter() <= clientSocket[tmpEvents[index].fd].getPostBuffer().size()) {
+        ft_parse_request(clientSocket[tmpEvents[index].fd].getPostBuffer());
+        this->_errorCode = 0;
+        std::string pr = this->getPort();
+        int check = requestErrorsHandling(p, pr);
+        if (check == 0) {
+            handleHttpRequest(tmpEvents[index].fd, p, 1, type);
+        }
+        clientSocket[tmpEvents[index].fd].fillResponseBuffer(this->response);
+        clientSocket[tmpEvents[index].fd].setRemainingBytes(this->response.length());
+        Sent(tmpEvents[index].fd, index);
+        close(tmpEvents[index].fd);
+        clientSocket[tmpEvents[index].fd].clearPostBuffer();
+        clientSocket[tmpEvents[index].fd].resetResponseBodyCounter();
+    }
+    clientSocket[tmpEvents[index].fd].clearBuffer();
+}
+
+void Server::DELETE(int index,  Parser &p, int type) {
+
+    (void) type;
+    std::cout << blueColor << "DELETE" << resetColor << std::endl;
+    handleHttpRequest(tmpEvents[index].fd, p, 1, 2);
+    clientSocket[tmpEvents[index].fd].clearPostBuffer();
+    clientSocket[tmpEvents[index].fd].resetResponseBodyCounter();
+    this->_errorCode = 0;
+}
+
 bool Server::receiveData(int cSock, int index) {
 
     char chunk[CHUNK_SIZE + 1];
@@ -127,4 +187,81 @@ bool Server::receiveData(int cSock, int index) {
     clientSocket[cSock].appendStr(chunk, bytesRead);
     std::cout << yellowColor << "Receiving...." << resetColor << std::endl;
     return true;
+}
+
+bool Server::acceptNewConnection( ServerSocket server ) {
+
+    int cSock;
+    pollfd newClient;
+    int addrlen = sizeof(server.getSocketAddress());
+    
+    if ((cSock = accept(server.getServerSocketFd(), (struct sockaddr *)(&server.getSocketAddress()), (socklen_t *)&addrlen)) == FAILED) {
+        return false;
+    } else {
+        int status = fcntl(cSock, F_SETFL, O_NONBLOCK);
+        if (status == FAILED) {
+            perror("calling fcntl");
+        }
+        INIT_EVENT(newClient, cSock);
+        tmpEvents.push_back(newClient);
+        clientSocket.insert(std::make_pair(newClient.fd, Client(newClient)));
+    }
+    return true;
+}
+
+void Server::runServer(Parser &p) {
+
+    while (true) {
+        poll(tmpEvents.data(), tmpEvents.size(), -1);
+        for (std::vector<ServerSocket>::iterator it = virtualServer.begin(); it != virtualServer.end(); it++) {
+            for (size_t i = 0; i < tmpEvents.size(); i++) {
+                if (getClientPort(i) != it->getServerPort() && i)
+                    continue;
+                if (tmpEvents[i].fd == it->getServerSocketFd()) {
+                    if (!this->acceptNewConnection(*it)) {
+                        continue;
+                    }
+                }
+                if (tmpEvents[i].revents & POLLIN && !isServer(tmpEvents[i].fd)) {
+                    if (!receiveData(tmpEvents[i].fd, i)) {
+                        break;
+                    }
+                    if (!clientSocket[tmpEvents[i].fd].getRemainingBytes() && !clientSocket[tmpEvents[i].fd].getResponseBodyCounter())
+                    {
+                        ft_parse_request(clientSocket[tmpEvents[i].fd].getBuffer());
+                        if (request_data["Method"] != "GET" && request_data["Method"] != "POST" && request_data["Method"] != "DELETE") {
+                            close(tmpEvents[i].fd);
+                            clientSocket.erase(tmpEvents[i].fd);
+                            tmpEvents.erase(tmpEvents.begin() + i);
+                            clientSocket[tmpEvents[i].fd].clearBuffer();
+                            request_data.clear();
+                            continue;
+                        }
+                    }
+                    if (request_data["Method"] == "GET")
+                    {
+                        GET(i, p, 1);
+                    }
+                    else if (request_data["Method"] == "DELETE") {
+                        DELETE(i, p, 0);
+                    }
+                    else {
+                        if (clientSocket[tmpEvents[i].fd].getPostBuffer().empty()) {
+                            std::map<std::string, std::string>::iterator it = request_data.find("Content-Length");
+                            clientSocket[tmpEvents[i].fd].initResponseBodyCounter((size_t) atoi(it->second.c_str()) + size_header);
+                        }
+                        POST(i, p, 0);
+                    }
+                }
+                if (tmpEvents[i].revents & POLLOUT && !isServer(tmpEvents[i].fd)) {
+                    if (clientSocket[tmpEvents[i].fd].getRemainingBytes()) {
+                        if (!Sent(tmpEvents[i].fd, i))
+                            break;
+                    }
+                }
+                clientSocket[tmpEvents[i].fd].clearBuffer();
+                request_data.clear();
+            }
+        }
+    }
 }

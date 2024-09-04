@@ -1,0 +1,68 @@
+[[server]]
+
+	port = [1336, 1338]
+	host = 127.0.0.1
+	server_name = facebook.com
+	root = /Volumes/0x0000/src
+	index = index.html
+	allowed_methods = [GET,POST, DELETE]
+	autoindex = on
+	_clientMaxBodySize = 1021545510215455
+
+		[[server.location]]
+			prefix = /
+			autoindex = off
+			root = /Volumes/0x0000/src
+			index = index.html
+			error_page = [404, /404.html]
+			allowed_methods = [ GET, POST, DELETE]
+			_clientMaxBodySize = 1021545510215455
+	
+		[[server.location]]
+			prefix = /aa
+			autoindex = off
+			root = /Volumes/0x0000/src
+			index = test.html
+			error_page = [404, /404.html]
+			allowed_methods = [ GET, POST, DELETE]
+			_clientMaxBodySize = 1021545510215455
+
+		[[server.location]]
+			prefix = /eee
+			autoindex = off
+			root = /Volumes/0x0000/src
+			index = test1.html
+			error_page = [404, /404.html]
+			allowed_methods = [ GET, POST, DELETE]
+			_clientMaxBodySize = 1021545510215455
+
+
+[[server]]
+
+	port = [ 1339, 2020]
+	host = 127.0.0.1
+	server_name = 1.com
+	root = /Volumes/0x0000/src
+	index = index.html
+	allowed_methods = [GET, POST, DELETE]
+	error_page = [404, www/error_pages/404.html]
+	_clientMaxBodySize = 1021545510215455
+
+		[[server.location]]
+
+			prefix = /aa
+			allowed_methods = [GET,POST, DELETE]
+			error_page = [404, /404.html]
+			cgi = .py
+
+		[[server.location]]
+		
+			prefix = /
+			upload_path = /Volumes/0x0000/src
+			autoindex = on
+			root = /Volumes/0x0000/src
+			allowed_methods = [GET, POST, DELETE]
+			index = index.html
+			error_page = [404, /aa]
+			_clientMaxBodySize = 1021545510215455
+			cgi = .py

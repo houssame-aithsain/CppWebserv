@@ -129,6 +129,7 @@ std::string CGI::extractClientContent(Client & client, std::map<std::string, std
     ERRCODE = 0;
     data["body"] = client.getPostBuffer().substr(0, client.getPostBuffer().find("\r\n\r\n")) + "\r\n\r\n" +  data["body"];
     PATH =  data["PWD"];
+    std::cout << "path: " << PATH << std::endl;
     if (data["Method"] == "GET") {
         GETenvInit(data);
     }

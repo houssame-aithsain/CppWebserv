@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+import cgi
+import os
+
+form = cgi.FieldStorage()
+
+# print('HTTP/1.1 200 OK\nContent-Type: text/html\nContent-Length: 1500\n\n')
+print('<!DOCTYPE html>\n<html lang="en">\n<head>\n\r<meta charset="UTF-8">\n\r<meta name="viewport" content="width=device-width, initial-scale=1.0">\n\r<title>Vibrant Website</title>\n\n</head>\n<body>\n\r</body>\n</html>')
+
+name = form.getvalue('na')
+email = form.getvalue('va')
+# message = form.getvalue('message')
+
+print("<html>")
+print("<head>")
+print("<title>Form Data</title>")
+
+print("<style>")
+print("   * {")
+print("    margin: 0;")
+print("    padding: 0;")
+print("    box-sizing: border-box;")
+print("    font-family: 'Courier New', Courier, monospace;")
+print("   }")
+print("   h2 {")
+# print("    text-align: center;")
+print("    margin: 1em;")
+print("   }")
+print("   body {")
+print("    background-color: #f4f9f9;")
+print("    display: flex;")
+print("    flex-direction: column;")
+print("    padding: 1rem 15%;")
+print("   }")
+print("   p {")
+print("    margin: 0.5em;")
+print("    word-wrap: break-word;")
+print("   }")
+print("  </style>")
+
+print("</head>")
+print("<body>")
+print("<h2>Submitted get method Data:</h2>")
+print("<p><strong>Name:</strong> " + str(name) + "</p>")
+print("<p><strong>Email:</strong> " + str(email) + "</p>")

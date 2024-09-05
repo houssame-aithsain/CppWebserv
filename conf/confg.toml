@@ -3,7 +3,7 @@
 	port = [1336, 1338]
 	host = 127.0.0.1
 	server_name = facebook.com
-	root = /Volumes/0x0000/src
+	root = /Users/hait-hsa/Desktop/CppWebserv/src
 	index = index.html
 	allowed_methods = [GET,POST, DELETE]
 	autoindex = on
@@ -12,7 +12,7 @@
 		[[server.location]]
 			prefix = /
 			autoindex = off
-			root = /Volumes/0x0000/src
+			root = /Users/hait-hsa/Desktop/CppWebserv/src
 			index = index.html
 			error_page = [404, /404.html]
 			allowed_methods = [ GET, POST, DELETE]
@@ -21,7 +21,7 @@
 		[[server.location]]
 			prefix = /aa
 			autoindex = off
-			root = /Volumes/0x0000/src
+			root = /Users/hait-hsa/Desktop/CppWebserv/src
 			index = test.html
 			error_page = [404, /404.html]
 			allowed_methods = [ GET, POST, DELETE]
@@ -30,7 +30,7 @@
 		[[server.location]]
 			prefix = /eee
 			autoindex = off
-			root = /Volumes/0x0000/src
+			root = /Users/hait-hsa/Desktop/CppWebserv/src
 			index = test1.html
 			error_page = [404, /404.html]
 			allowed_methods = [ GET, POST, DELETE]
@@ -42,7 +42,7 @@
 	port = [ 1339, 2020]
 	host = 127.0.0.1
 	server_name = 1.com
-	root = /Volumes/0x0000/src
+	root = /Users/hait-hsa/Desktop/CppWebserv/src
 	index = index.html
 	allowed_methods = [GET, POST, DELETE]
 	error_page = [404, www/error_pages/404.html]
@@ -58,9 +58,9 @@
 		[[server.location]]
 		
 			prefix = /
-			upload_path = /Volumes/0x0000/src
+			upload_path = /Users/hait-hsa/Desktop/CppWebserv/src
 			autoindex = on
-			root = /Volumes/0x0000/src
+			root = /Users/hait-hsa/Desktop/CppWebserv/src
 			allowed_methods = [GET, POST, DELETE]
 			index = index.html
 			error_page = [404, /aa]

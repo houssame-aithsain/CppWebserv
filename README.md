@@ -1,2 +1,0 @@
-parsing
-creating server websockets

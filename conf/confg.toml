@@ -17,10 +17,10 @@
 			error_page = [404, /404.html]
 			allowed_methods = [ GET, POST, DELETE]
 			_clientMaxBodySize = 1021545510215455
-	
+
 		[[server.location]]
 			prefix = /aa
-			autoindex = off
+			autoindex = on
 			root = /Users/hait-hsa/Desktop/CppWebserv/src
 			index = test.html
 			error_page = [404, /404.html]

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="index.css">
+    <title>CppWebserv Project</title>
+</head>
+
+<body>
+    <header>
+        <h1>CppWebserv</h1>
+    </header>
+
+    <main>
+        <section class="video-section">
+            <h2>Valorant Best Moments: Insane Kills and Crazy Plays!</h2>
+            <video width="1280" height="720" controls>
+                <source src="/video.mp4" type="video/mp4">
+            </video>
+        </section>
+
+        <section class="forms-section">
+            <form action="/CGIscripts/post.py" method="POST" enctype="multipart/form-data">
+                <h2><b>POST Method</b></h2>
+                <input type="text" name="na" placeholder="Enter name">
+                <input type="text" name="va" placeholder="Enter value">
+                <button type="submit">Submit</button>
+            </form>
+
+            <form action="/CGIscripts/upload.py" method="POST" enctype="multipart/form-data">
+                <h2><b>Upload File</b></h2>
+                <input type="file" name="file" multiple>
+                <button type="submit">Upload</button>
+            </form>
+
+            <form action="/CGIscripts/get.py" method="GET" enctype="multipart/form-data">
+                <h2><b>GET Method</b></h2>
+                <input type="text" name="na" placeholder="Enter name">
+                <input type="text" name="va" placeholder="Enter value">
+                <button type="submit">Retrieve</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 CppWebserv Project</p>
+        <p>This is a C++ web server project designed to handle HTTP requests using socket programming.</p>
+        <p>We implemented GET, POST, and file upload methods, with a configuration similar to Nginx.</p>
+    </footer>
+</body>
+
+</html>

@@ -846,6 +846,36 @@ bool Response::check_error_page(Parser &p, std::string port)
     return (false);
 }
 
+
+
+void Response::delete_handler()
+{
+    std::string type = getResourceType(new_req_resource);
+    if (type == "file")
+    {
+        if (!remove(new_req_resource.c_str()))
+        {
+            std::cout << "File removed successfully\n";
+            this->_errorCode = 200;
+            this->response = this->_errorCodes[200];
+        }
+        else 
+        {
+            std::cout << "Error deleting file\n";
+            this->_errorCode = 404;
+            this->response = this->_errorCodes[404];
+        }
+    }
+    else
+    {
+        std::cout << "Error [Delete REQUEST] don't delete a folder, specify a file please!\n";
+        this->_errorCode = 404;
+        this->response = this->_errorCodes[404];
+    }
+}
+
+
+
 std::string Response::check_alias(Parser &p, std::string port, std::string prefix)
 {
     std::string page_path = prefix;
@@ -962,5 +992,7 @@ std::string Response::createResponse(Parser &p , int type, Client &client)
         get_resource(p, port, client);
     else if (type == 0 && check)
         post_req_handler(p, port, client);
+    else if (type == 2 && check)
+        delete_handler();
     return ("");
 }

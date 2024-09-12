@@ -20,7 +20,7 @@ Build Instructions
 
     bash
 
-git clone https://github.com/yourusername/CppWebServ.git
+git clone https://github.com/houssame-aithsain/CppWebserv.git
 
 Navigate to the project directory:
 

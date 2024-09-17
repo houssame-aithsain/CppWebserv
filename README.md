@@ -4,10 +4,10 @@
 ## Introduction
 CppWebServ is a lightweight, high-performance web server built using C++. It supports basic HTTP methods such as GET, POST, and DELETE. The server is configurable, and users can define various settings, such as the IP address, port, and limits for request bodies. The project includes CGI support for handling dynamic content.
 
-- **Live Site**: [Link to deployed site]
+- **Live Site**: https://houssame-aithsain.github.io/
 - **Project Blog**: [Link to final project blog article]
 - **Author(s) LinkedIn**:
-  - [LinkedIn Profile](https://www.linkedin.com/in/houssame-aithsain)
+  - [LinkedIn Profile] https://www.linkedin.com/in/houssame-aithsain
 
 ## Installation
 

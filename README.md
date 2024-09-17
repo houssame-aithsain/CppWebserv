@@ -1,45 +1,90 @@
-CppWebServ
+```markdown
+# CppWebServ
 
-CppWebServ is a custom-built HTTP web server developed using C++. The server is designed to handle multiple HTTP requests concurrently, support CGI for handling file uploads, and integrate WebSocket functionality for real-time communication. This project aims to offer a lightweight, configurable alternative to web servers like Apache and Nginx.
+## Introduction
+CppWebServ is a lightweight, high-performance web server built using C++. It supports basic HTTP methods such as GET, POST, and DELETE. The server is configurable, and users can define various settings, such as the IP address, port, and limits for request bodies. The project includes CGI support for handling dynamic content.
 
-Project Overview
+- **Live Site**: [Link to deployed site]
+- **Project Blog**: [Link to final project blog article]
+- **Author(s) LinkedIn**:
+  - [Your LinkedIn Profile](https://www.linkedin.com/in/houssame-aithsain)
 
-CppWebServ is a C++ web server that efficiently handles HTTP requests, CGI file uploads, and provides real-time updates via WebSockets. It's designed for developers looking for a highly configurable, low-level server option that can be easily customized through a configuration file.
-Features
+## Installation
 
-    HTTP Request Handling: Supports GET, POST, and DELETE methods.
-    CGI Integration: Handles file uploads via CGI and processes dynamic content.
-    WebSockets: Real-time communication for live data updates.
-    Multiple Server Support: Hosts multiple servers, each capable of listening on different ports.
-    Customizable Config File: Easily configure server settings like IP address, port, hostname, and more.
-    URL Redirection: Support for URL redirects via configuration.
+To install and run CppWebServ locally, follow these steps:
 
-Build Instructions
+### Prerequisites
+- **C++ Compiler**: Ensure you have a working C++ compiler (e.g., `g++`).
+- **Make**: Ensure `make` is installed.
+- **Dependencies**: Make sure to have any additional libraries installed, such as `libcgi`, `sys/socket.h`, `netinet/in.h`.
 
-    Clone the repository:
+### Steps
 
-    bash
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/houssame-aithsain/CppWebServ.git
+   cd CppWebServ
+   ```
 
-git clone https://github.com/houssame-aithsain/CppWebserv.git
+2. Compile the project:
+   ```bash
+   make
+   ```
 
-Navigate to the project directory:
+3. Run the server:
+   ```bash
+   ./cppwebserv [path to configuration file]
+   ```
 
-bash
+4. Test the server by accessing it via a browser or tools like `curl`:
+   ```bash
+   curl http://127.0.0.1:1336
+   ```
 
-cd CppWebServ
+## Usage
 
-Build the server:
+Once the server is running, you can make requests using a browser or HTTP tools:
 
-bash
+- **GET**: Access static content or dynamically generated content through CGI.
+- **POST**: Send data to the server (e.g., form submissions).
+- **DELETE**: Remove specific files or data from the server.
 
-    make
+The server configuration can be customized through a config file that allows specifying:
+- IP Address
+- Hostname
+- Port
+- URL redirection
+- Body size limit
+- CGI path
 
-Usage
+### Example Usage:
+```bash
+curl -X POST http://127.0.0.1:1336/upload -d "file=@test.txt"
+```
 
-Once built, you can run the web server using the following command:
+## Contributing
 
-bash
+Contributions are welcome! To contribute:
 
-./cppwebserv config_file_path
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes and commit them (`git commit -m 'Add new feature'`).
+4. Push to the branch (`git push origin feature-branch`).
+5. Open a pull request.
 
-Replace config_file_path with the path to your configuration file.
+Please ensure all new features and bug fixes come with tests.
+
+## Related Projects
+
+Here are some projects related to CppWebServ:
+- [Nginx](https://nginx.org)
+- [Apache](https://httpd.apache.org)
+
+## Licensing
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Screenshot
+
+![CppWebServ Screenshot](./src/ScreenShot.png)
+```

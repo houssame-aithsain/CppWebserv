@@ -7,7 +7,7 @@ CppWebServ is a lightweight, high-performance web server built using C++. It sup
 - **Live Site**: [Link to deployed site]
 - **Project Blog**: [Link to final project blog article]
 - **Author(s) LinkedIn**:
-  - [Your LinkedIn Profile](https://www.linkedin.com/in/houssame-aithsain)
+  - [LinkedIn Profile](https://www.linkedin.com/in/houssame-aithsain)
 
 ## Installation
 

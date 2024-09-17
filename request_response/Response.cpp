@@ -17,6 +17,7 @@ std::string to_string(int number) {
     return ss.str();
 }
 
+// getResourceType() is a method that gets the resource type. It takes a string as an argument and returns a string.
 std::string getResourceType(const std::string& path) {
     struct stat path_stat;
     stat(path.c_str(), &path_stat);
@@ -28,6 +29,7 @@ std::string getResourceType(const std::string& path) {
         return "other";
 }
 
+// msg_code_arr() is a method that initializes the message code array. It takes no arguments and returns nothing.
 void Response::msg_code_arr()
 {
     msg_code[100] = "Continue";
@@ -72,6 +74,7 @@ void Response::msg_code_arr()
     msg_code[505] = "HTTP Version Not Supported";
 }
 
+// get_msg() is a method that gets the message. It takes an integer as an argument and returns a string.
 std::string Response::get_msg(int code) 
 {
     msg_code_arr();
@@ -81,6 +84,7 @@ std::string Response::get_msg(int code)
     return "";
 }
 
+// ft_cut_file_from_req() is a method that cuts the file from the request. It takes a string as an argument and returns a string.
 std::string ft_cut_file_from_req(std::string &rs)
 {
     size_t find_dot = rs.rfind('.');
@@ -96,6 +100,7 @@ std::string ft_cut_file_from_req(std::string &rs)
     return ("");
 }
 
+// ft_getPageToRender() is a method that gets the page to render. It takes a vector of pairs of strings and vectors of strings as an argument and returns a string.
 std::string Response::ft_getPageToRender(std::vector<std::pair<std::string, std::vector<std::string> > > ParsedRequest)
 {
     for (std::vector<std::pair<std::string, std::vector<std::string> > >::iterator it = ParsedRequest.begin(); it != ParsedRequest.end(); ++it)
@@ -107,6 +112,7 @@ std::string Response::ft_getPageToRender(std::vector<std::pair<std::string, std:
     return ("");
 }
 
+// initMapErrors() is a method that initializes the error codes map. It takes no arguments and returns nothing.
 void Response::initMapErrors()
 {
     this->_errorCodes[504] = "HTTP/1.1 504 Gateway Timeout\r\nContent-Length: 54\r\n\r\n<html><body><h1>504 Gateway Timeout</h1></body></html>";
@@ -124,6 +130,7 @@ void Response::initMapErrors()
     this->_errorCodes[507] = "HTTP/1.1 507 Insufficient Storage\r\nContent-Length: 59\r\n\r\n<html><body><h1>507 Insufficient Storage</h1></body></html>";
 }
 
+// ft_trim() is a method that trims the string. It takes a string and a string as arguments and returns a string.
 std::string ft_trim(const std::string& str, std::string trim)
 {
     size_t first = str.find_first_not_of(trim);
@@ -133,7 +140,7 @@ std::string ft_trim(const std::string& str, std::string trim)
     return str.substr(first, (last - first + 1));
 }
 
-
+// ForbiddenChars() is a method that checks for forbidden characters. It takes a string as an argument and returns a boolean.
 bool ForbiddenChars(const std::string& str)
 {
     const std::string forbiddenChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;=%";
@@ -144,6 +151,7 @@ bool ForbiddenChars(const std::string& str)
     return false;
 }
 
+// getPort() is a method that gets the port. It takes no arguments and returns a string.
 std::string Response::getPort()
 {
     size_t pos = this->request_data["Host"].find_last_of(':');
@@ -154,6 +162,7 @@ std::string Response::getPort()
     return (str);
 }
 
+// getHost() is a method that gets the host. It takes no arguments and returns a string.
 std::string Response::getHost()  
 {
     std::string port = this->getPort();
@@ -166,7 +175,7 @@ std::string Response::getHost()
     return (str);
 }
 
-
+// BodySizeChecker() is a method that checks the body size. It takes a Parser object and a string as arguments and returns a boolean.
 bool Response::BodySizeChecker(Parser &p, std::string &port)
 {
     std::vector<std::string> vec =  p.get_data_from_conf(port, this->host, this->server_name, this->location , "_clientMaxBodySize", 1);
@@ -219,8 +228,7 @@ std::string ft_get_file(std::string &rs)
     return (getp);
 }
 
-
-
+// locationsMatching() is a method that matches the locations. It takes a Parser object, a string, and a string as arguments and returns nothing.
 void    Response::locationsMatching(Parser &p, std::string &port, std::string &page_path)
 {
 
@@ -371,6 +379,7 @@ bool Response::methodChecker(Parser &p, std::string &port, std::string &prefix)
     return (false);
 }
 
+// chunked_parsing() is a method that parses the chunked data. It takes a string as an argument and returns a string.
 std::string    chunked_parsing(std::string body)
 {
     std::string chunked_body;
@@ -409,6 +418,7 @@ std::string    chunked_parsing(std::string body)
     return (chunked_body);
 }
 
+// ft_parse_request() is a method that parses the request. It takes a string as an argument and returns nothing.
 void Response::ft_parse_request(std::string request) 
 {
     std::istringstream getrequestStream(request);
@@ -517,6 +527,7 @@ std::string removeUselessData(std::string input, std::string endDelimiter) {
     return (in);
 }
 
+// parse_request_body() is a method that parses the request body. It takes a string as an argument and returns a string.
 std::string Response::parse_request_body(std::string body)
 {
     std::string contentType = this->request_data["Content-Type"];
@@ -552,6 +563,7 @@ std::string Response::parse_request_body(std::string body)
     return body ;
 }
 
+// ft_getPageName() is a method that gets the page name. It takes a string as an argument and returns a string.
 std::string Response::ft_getPageName(std::string pageName)
 {
     size_t start = pageName.find("/", 0);
@@ -602,6 +614,7 @@ void    Response::init_mimes(void)
         mimes[line.substr(0, line.find(","))] = line.substr(line.find(",") + 1, line.size() - line.find(",") + 1);
 }
 
+// open_file() is a method that opens the file. It takes a string, an integer, a string, and a Client object as arguments and returns nothing.
 void Response::open_file(std::string new_req_resource, int check_301, std::string requestedResource, Client &client)
 {
     std::ifstream file(new_req_resource, std::ios::binary);
@@ -692,6 +705,7 @@ bool Response::check_auto_index(Parser &p, std::string &port, std::string &prefi
     return (false);
 }
 
+// list_dir() is a method that lists the directory. It takes a string as an argument and returns nothing.
 void Response::list_dir(std::string new_req_resource)
 {
     struct stat entry_stat;
@@ -774,6 +788,7 @@ std::string Response::cgi_path_checker(Parser &p, std::string &port, std::string
     return ("");
 }
 
+// get_index_conf() is a method that gets the index configuration. It takes a Parser object, a string, a string, and a string as arguments and returns a string.
 std::string Response::get_index_conf(Parser &p, std::string &port, std::string &prefix)
 {
     std::vector<std::string> data = p.get_data_from_conf(port, this->host, this->server_name, prefix, "index", 1);
@@ -817,7 +832,7 @@ bool Response::post_req_handler(Parser &p, std::string &port, Client &client)
     return (false);
 }
 
-
+// check_error_page() is a method that checks the error page. It takes a Parser object, a string, and a string as arguments and returns a boolean.
 bool Response::check_error_page(Parser &p, std::string port)
 {
     std::string root = get_root_for_location(p, port, this->location);
@@ -846,8 +861,7 @@ bool Response::check_error_page(Parser &p, std::string port)
     return (false);
 }
 
-
-
+// delete_handler() is a method that handles the delete request. It takes no arguments and returns nothing.
 void Response::delete_handler()
 {
     std::string type = getResourceType(new_req_resource);
@@ -894,6 +908,7 @@ std::string Response::check_alias(Parser &p, std::string port, std::string prefi
     return ("");
 }
 
+// init_request_data() is a method that initializes the request data. It takes a Parser object as an argument and returns nothing.
 void Response::init_request_data(Parser &p)
 {
     host = this->getHost();
@@ -935,6 +950,7 @@ void Response::init_request_data(Parser &p)
         this->request_data["CGI_PATH"] = new_req_resource;
 }
 
+// check_if_errors_nd_res() is a method that checks if there are errors and resources. It takes a Parser object as an argument and returns a boolean.
 bool Response::check_if_errors_nd_res(Parser &p)
 {
     if (requestedResource[requestedResource.size() - 1] != '/')

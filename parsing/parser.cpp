@@ -1,5 +1,6 @@
 #include "parser.hpp"
 
+// ft_trim() is a method that trims the string. It takes a string and a string as arguments and returns a string.
 std::string Parser::ft_trim(const std::string& str, std::string trim)
 {
     size_t first = str.find_first_not_of(trim);
@@ -18,6 +19,7 @@ int ft_checkisNumber(const std::string& s)
     return 1;
 }
 
+// ft_nan() is a method that checks if the value is a number. It takes a vector of strings as an argument and returns an integer.
 int Parser::ft_nan(std::vector<std::string> values)
 {
     for (std::size_t k = 0; k < values.size(); ++k) 
@@ -44,7 +46,7 @@ Parser &Parser::operator=(const Parser &pr)
     return (*this);
 }
 
-
+// ft_count_special_char() is a method that counts the special characters. It takes a string and a character as arguments and returns an integer.
 int ft_count_special_char(std::string line, char car)
 {
     size_t i = 0;
@@ -72,8 +74,7 @@ int ft_check_whitespaces(std::string str)
     return (1);
 }
 
-
-
+// ft_split_the_multiple_data() is a method that splits the multiple data. It takes a string as an argument and returns a vector of strings.
 std::vector<std::string>  Parser::ft_split_the_multiple_data(std::string value)
 {
     int open_brackets = 0;
@@ -126,8 +127,7 @@ std::vector<std::string>  Parser::ft_split_the_multiple_data(std::string value)
     return (result);
 }
 
-
-
+// ft_read_nd_parse() is a method that reads and parses the configuration file. It takes a string as an argument and returns nothing.
 void Parser::ft_read_nd_parse(std::string fileName)
 {
     std::ifstream in(fileName);
@@ -248,7 +248,7 @@ void Parser::ft_check_duplicated_equals(std::string line)
     }
 }
 
-
+// ft_ckeck_wrong_keys() is a method that checks for wrong keys. It takes a string and an integer as arguments and returns nothing.
 void Parser::ft_check_wrong_keys(std::string key, int type)
 {
     if (type == 0)
@@ -294,6 +294,7 @@ int Parser::ft_isLastServerNotEmpty(std::vector<server_data> &wrapper)
     return -1;
 }
 
+// ft_check_duplicated_values() is a method that checks for duplicated values. It takes a vector of server_data as an argument and returns nothing.
 void Parser::ft_check_duplicated_values(std::vector<server_data> wrapper)
 {
     if (wrapper.empty())
@@ -341,6 +342,7 @@ void Parser::ft_check_duplicated_values(std::vector<server_data> wrapper)
 
 std::vector<server_data> Parser::getWrapper( void ) {return (wrapper);}
 
+// check_for_default_location() is a method that checks for the default location. It takes no arguments and returns nothing.
 void    Parser::check_for_default_location(void)
 {
     size_t i = 0;
@@ -374,6 +376,7 @@ void    Parser::check_for_default_location(void)
     }
 }
 
+// get_data_from_conf() is a method that gets data from the configuration. It takes a string, a string, a string, a string, a string, and an integer as arguments and returns a vector of strings.
 std::vector<std::string> Parser::get_data_from_conf(std::string port, std::string host, std::string server_name, std::string prefix, std::string key, int bv)
 {
     size_t i = 0;
@@ -517,7 +520,7 @@ std::vector<std::string> Parser::get_data_from_conf(std::string port, std::strin
     return (empty_for_empty);
 }
 
-
+// get_server_locations() is a method that gets the server locations. It takes a string, a string, and a string as arguments and returns a vector of strings.
 std::vector<std::string> Parser::get_server_locations(std::string &port,  std::string host, std::string server_name)
 {
     size_t i = 0;
@@ -618,8 +621,7 @@ std::vector<std::string> Parser::get_server_locations(std::string &port,  std::s
     return (prefixes);
 }
 
-
-
+// check_server_names() is a method that checks if there are duplicated server names. It takes no arguments and returns nothing.
 void Parser::check_server_names(void)
 {
     std::vector<std::string> server_names;
@@ -730,7 +732,7 @@ void Parser::check_server_names(void)
     }
 }
 
-
+// check_port_dup() is a method that checks if there are duplicated ports. It takes no arguments and returns nothing.
 void Parser::check_port_dup(void)
 {
     for (std::vector<server_data>::iterator it = wrapper.begin(); it != wrapper.end(); ++it)
@@ -758,6 +760,7 @@ void Parser::check_port_dup(void)
     }
 }
 
+// check_dup_keys() is a method that checks if there are duplicated keys. It takes no arguments and returns nothing.
 void Parser::check_dup_keys(void)
 {
     std::vector<std::string> keys;
@@ -809,6 +812,7 @@ void Parser::check_dup_keys(void)
     }
 }
 
+// check_error_pages() is a method that checks if there are error pages. It takes no arguments and returns nothing.
 void Parser::check_error_pages(void)
 {
     std::vector<std::string> server_names;

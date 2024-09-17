@@ -23,6 +23,7 @@ Server & Server::operator=(const Server & other) {
     return (*this);
 }
 
+// handleHttpRequest() is a method that handles the HTTP request. It takes an integer, a Parser object, an integer, and an integer as arguments and returns nothing.
 void Server::handleHttpRequest(int cSock, Parser &p, int flag, int type)
 {
     if (flag == 1 && this->_errorCode == 0) {
@@ -37,6 +38,7 @@ void Server::handleHttpRequest(int cSock, Parser &p, int flag, int type)
     clientSocket[cSock].clearBuffer();
 }
 
+// getClientPort() is a method that gets the client port. It takes an integer as an argument and returns an integer.
 int Server::getClientPort(int index) {
     
     int cS = tmpEvents[index].fd;
@@ -50,6 +52,7 @@ int Server::getClientPort(int index) {
     return clientPort;
 }
 
+// isServer() is a method that checks if the server is running. It takes an integer as an argument and returns a boolean.
 bool Server::isServer( int cSock ) {
 
     for (std::vector<ServerSocket>::iterator it = virtualServer.begin(); it != virtualServer.end(); it++) {
@@ -59,6 +62,7 @@ bool Server::isServer( int cSock ) {
     return false;
 }
 
+// collectServersData() is a method that collects server data. It takes a vector of server_data as an argument and returns nothing.
 void Server::collectServersData(std::vector<server_data> serverData) {
 
     std::string host;
@@ -79,6 +83,7 @@ void Server::collectServersData(std::vector<server_data> serverData) {
     }
 }
 
+// initializeSocket() is a method that initializes the socket. It takes a vector of server_data as an argument and returns nothing.
 void Server::initializeSocket(std::vector<server_data> serverData) {
     
     std::vector<std::string> bindedHosts;
@@ -99,6 +104,7 @@ void Server::initializeSocket(std::vector<server_data> serverData) {
     }
 }
 
+// Sent() is a method that sends data. It takes an integer and an integer as arguments and returns a boolean.
 bool Server::Sent(int cSock, int index) {
 
     ssize_t bytesSent = send(cSock, clientSocket[cSock].getResponseBuffer().c_str() + clientSocket[cSock].getTotalBytesSent(), clientSocket[cSock].getRemainingBytes(), 0);
@@ -123,6 +129,7 @@ bool Server::Sent(int cSock, int index) {
     return true;
 }
 
+// GET() is a method that handles the GET request. It takes an integer, a Parser object, and an integer as arguments and returns nothing.
 void Server::GET(int index,  Parser &p, int type) {
 
     std::cout << blueColor << "GET" << resetColor << std::endl;
@@ -137,6 +144,7 @@ void Server::GET(int index,  Parser &p, int type) {
     }
 }
 
+// POST() is a method that handles the POST request. It takes an integer, a Parser object, and an integer as arguments and returns nothing.
 void Server::POST(int index, Parser &p, int type) {
 
     std::cout << blueColor << "POST" << resetColor << std::endl;
@@ -159,6 +167,7 @@ void Server::POST(int index, Parser &p, int type) {
     clientSocket[tmpEvents[index].fd].clearBuffer();
 }
 
+// DELETE() is a method that handles the DELETE request. It takes an integer, a Parser object, and an integer as arguments and returns nothing.
 void Server::DELETE(int index,  Parser &p, int type) {
 
     (void) type;
@@ -169,6 +178,7 @@ void Server::DELETE(int index,  Parser &p, int type) {
     this->_errorCode = 0;
 }
 
+// receiveData() is a method that receives data. It takes an integer and an integer as arguments and returns a boolean.
 bool Server::receiveData(int cSock, int index) {
 
     char chunk[CHUNK_SIZE + 1];
@@ -189,6 +199,7 @@ bool Server::receiveData(int cSock, int index) {
     return true;
 }
 
+// acceptNewConnection() is a method that accepts a new connection. It takes a ServerSocket object as an argument and returns a boolean.
 bool Server::acceptNewConnection( ServerSocket server ) {
 
     int cSock;
@@ -209,6 +220,7 @@ bool Server::acceptNewConnection( ServerSocket server ) {
     return true;
 }
 
+// runServer() is a method that runs the server. It takes a Parser object as an argument and returns nothing.
 void Server::runServer(Parser &p) {
 
     while (true) {

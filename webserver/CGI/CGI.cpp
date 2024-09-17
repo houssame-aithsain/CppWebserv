@@ -32,6 +32,7 @@ CGI & CGI::operator=(const CGI & other) {
     return (*this);
 }
 
+// executeCGIscript() is a method that executes the CGI script. It takes a map of strings as an argument and returns nothing.
 void CGI::executeCGIscript(std::map<std::string, std::string> data) {
 
     int status;
@@ -95,6 +96,7 @@ void CGI::executeCGIscript(std::map<std::string, std::string> data) {
     childTmpFile.close();
 }
 
+// GeTenveInit() is a method that initializes the environment for the GET method. It takes a map of strings as an argument and returns nothing.
 void CGI::GETenvInit(std::map<std::string, std::string> data) {
 
     REQUEST_METHOD = "REQUEST_METHOD=GET";
@@ -107,6 +109,7 @@ void CGI::GETenvInit(std::map<std::string, std::string> data) {
     env.push_back(nullptr);
 }
 
+// POSTenvInit() is a method that initializes the environment for the POST method. It takes a Client object and a map of strings as arguments and returns nothing.
 void CGI::POSTenvInit(Client client, std::map<std::string, std::string> data) {
 
     std::string lent;
@@ -124,6 +127,7 @@ void CGI::POSTenvInit(Client client, std::map<std::string, std::string> data) {
     env.push_back(nullptr);
 }
 
+// extractClientContent() is a method that extracts the content from the client. It takes a Client object and a map of strings as arguments and returns a string.
 std::string CGI::extractClientContent(Client & client, std::map<std::string, std::string> data) 
 {
     ERRCODE = 0;
